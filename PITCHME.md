@@ -2,7 +2,7 @@
 
 ---
 
-## Agenda
+### Agenda
 
 * Starting and stopping a Docker container before and after a test Suite.
 * Accessing the container from the test
