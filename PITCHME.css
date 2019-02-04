@@ -16,7 +16,7 @@
   line-height: 1.2;
   border-radius: 10px;
   max-height: 60vh !important;
-  overflow: auto !important;
+  overflow: hidden !important;
   word-wrap: break-word
 }
 
