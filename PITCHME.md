@@ -1,13 +1,11 @@
-## Hello!
-
-+++
-
-## Hola!
-
 ---
 
-## Goodbye!
+@snap[west]
+# Hello
+@snapend
 
-+++
+@snap[east fragment]
+# World!
+@snapend
 
-## Adiós!
+
