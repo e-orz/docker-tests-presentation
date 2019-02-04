@@ -16,10 +16,9 @@
 * Accessing the container from the test
 * Container logs
 * Linux and Mac support (Windows on best effort basis)
-* Special case study: Kafka ("compose" in code, private network, exposed port discovery)
-* Jenkins support (mapping the docker socket)
 
 +++
+
 #### Starting ES container
 
 ```scala
@@ -56,8 +55,41 @@ class TestESSuiteDemo extends FlatSpec with ForAllTestContainer {
 +++
 
 ### Live Demo
+
 * Fast start and stop
 * Monitoring crashed test JVM (e.g. pressing stop in Intellij)
 * Keeps the host machine clean after the tests (live demo)
 * Debugging in Intellij!
 * Running a single test and not the whole test suite (even from Intellij)
+
+---
+
+### Multiple Containers
+
+```scala
+  def elasticsearch(elasticsearchVersion: String): GenericContainer = {
+    val scalaContainer = GenericContainer(s"docker.elastic.co/elasticsearch/elasticsearch-oss:$elasticsearchVersion",
+      exposedPorts = Seq(9200),
+      waitStrategy = Wait.forHttp("/").forPort(9200).forStatusCode(200),
+      env = Map("discovery.type" -> "single-node", "ES_JAVA_OPTS" -> "-Xms2000m -Xmx2000m")
+    )
+    scalaContainer.configure { container =>
+      val logger = new Slf4jLogConsumer(LoggerFactory.getLogger(s"elasticsearch-oss:$elasticsearchVersion"))
+      container.withLogConsumer(logger)
+    }
+    scalaContainer
+  }
+
+  def cassandra(cassandraVersion: String): GenericContainer = {
+    val scalaContainer = GenericContainer(s"cassandra:$cassandraVersion",
+      waitStrategy = Wait.forLogMessage(".*Starting listening for CQL clients.*\n", 1),
+      env = Map("JVM_OPTS" -> "-Xms1G -Xmx1G")
+    )
+    scalaContainer.configure { container =>
+      val logger = new Slf4jLogConsumer(LoggerFactory.getLogger(container.getDockerImageName))
+      container.withLogConsumer(logger)
+    }
+    scalaContainer
+  }
+```
+
