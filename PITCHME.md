@@ -58,7 +58,7 @@ class TestESSuiteDemo extends FlatSpec with ForAllTestContainer {
 
 * Fast start and stop
 * Monitoring crashed test JVM (e.g. pressing stop in Intellij)
-* Keeps the host machine clean after the tests (live demo)
+* Keeps the host machine clean after the tests
 * Debugging in Intellij!
 * Running a single test and not the whole test suite (even from Intellij)
 
@@ -91,5 +91,37 @@ class TestESSuiteDemo extends FlatSpec with ForAllTestContainer {
     }
     scalaContainer
   }
+```
+
+@[15](Another wait strategy)
+
++++
+
+#### The Trait (reusable for several test suites)
+
+```scala
+trait EsCasDockerSuite extends ForAllTestContainer { this:Suite =>
+  def cassandraVersion: String
+  def elasticsearchVersion: String
+  val elasticsearchContainer = ContainerHelpers.elasticsearch(elasticsearchVersion)
+  val cassandraContainer = ContainerHelpers.cassandra(cassandraVersion)
+  override val container = MultipleContainers(cassandraContainer, elasticsearchContainer)
+}
+```
+@[6](Note: the container won't start in parallel)
+
++++
+
+#### The Actual Test Suite
+
+```scala
+class TestESCasSuite extends FlatSpec with EsCasDockerSuite {
+  override def elasticsearchVersion: String = "6.5.4"
+  override def cassandraVersion: String = "3.11.3"
+
+  "EsCasDockerSuite" should "work" in {
+    assert(true)
+  }
+}
 ```
 
