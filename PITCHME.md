@@ -33,7 +33,10 @@ lkjflkdsj
 *  simple (almost declerative) API
 * 8
 
----
++++
+@snap[north-east template-note text-gray]
+Code presenting repository source file template.
+@snapend
 ```scala
 class TestESSuiteDemo extends FlatSpec with ForAllTestContainer {
   val elasticsearchVersion: String = "6.5.4"
