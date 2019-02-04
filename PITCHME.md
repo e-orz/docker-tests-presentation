@@ -125,3 +125,38 @@ class TestESCasSuite extends FlatSpec with EsCasDockerSuite {
 }
 ```
 
+---
+
+### Starting the Containers in Parallel
+
+```scala
+class MultipleContainersParallelExecution private(containers: Seq[LazyContainer[_]]) extends Container {
+  import scala.concurrent.ExecutionContext.Implicits.global
+  import scala.concurrent.duration._
+
+  override def finished()(implicit description: Description): Unit = {
+    val f = Future.traverse(containers)(lazyContainer => Future(lazyContainer.finished()(description)))
+    Await.ready(f, 5.minutes)
+  }
+
+  override def succeeded()(implicit description: Description): Unit = {
+    val f = Future.traverse(containers)(lazyContainer => Future(lazyContainer.succeeded()(description)))
+    Await.ready(f, 5.minutes)
+  }
+
+  override def starting()(implicit description: Description): Unit = {
+    val f = Future.traverse(containers)(lazyContainer => Future(lazyContainer.starting()(description)))
+    Await.ready(f, 5.minutes)
+  }
+
+  override def failed(e: Throwable)(implicit description: Description): Unit = {
+    val f = Future.traverse(containers)(lazyContainer => Future(lazyContainer.failed(e)(description)))
+    Await.ready(f, 5.minutes)
+  }
+}
+
+object MultipleContainersParallelExecution {
+
+  def apply(containers: LazyContainer[_]*): MultipleContainersParallelExecution = new MultipleContainersParallelExecution(containers)
+}
+```
