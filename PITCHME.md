@@ -37,7 +37,7 @@ lkjflkdsj
 @snap[text-15 text-gold]
 Code presenting rrrrrepository source file template.
 @snapend
-@snap[midpoint]
+@snap[south]
 ```scala
 class TestESSuiteDemo extends FlatSpec with ForAllTestContainer {
   val elasticsearchVersion: String = "6.5.4"
