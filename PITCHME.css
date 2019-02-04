@@ -1,5 +1,9 @@
 /** Code-Presenting Template Styles ***/
 
+.hljs {
+  background: none;
+}
+
 .reveal pre {
   width: 98%;
   margin: 0px;
