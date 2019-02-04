@@ -34,7 +34,7 @@ lkjflkdsj
 * 8
 
 +++
-@snap[north-east template-note text-gray]
+@snap[text-15 text-gold]
 Code presenting repository source file template.
 @snapend
 @snap[west span-100]
