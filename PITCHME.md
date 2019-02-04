@@ -37,7 +37,7 @@ lkjflkdsj
 @snap[north-east template-note text-gray]
 Code presenting repository source file template.
 @snapend
-@snap[south span-100]
+@snap[west span-100]
 ```scala
 class TestESSuiteDemo extends FlatSpec with ForAllTestContainer {
   val elasticsearchVersion: String = "6.5.4"
