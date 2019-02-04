@@ -34,7 +34,6 @@ lkjflkdsj
 * 8
 
 ---
-#### Simple Example (That works!)
 ```scala
 class TestESSuiteDemo extends FlatSpec with ForAllTestContainer {
   val elasticsearchVersion: String = "6.5.4"
