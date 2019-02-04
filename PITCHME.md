@@ -35,7 +35,7 @@ lkjflkdsj
 
 ---
 
-## Simple Example (That works!)
+#### Simple Example (That works!)
 
 ```scala
 class TestESSuiteDemo extends FlatSpec with ForAllTestContainer {
