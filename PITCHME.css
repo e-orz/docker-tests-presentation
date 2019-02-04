@@ -12,7 +12,7 @@
   line-height: 1.2;
   border-radius: 10px;
   max-height: 60vh !important;
-  overflow: hidden !important;
+  overflow: auto !important;
 }
 
 @media (device-width: 100vw) and (device-height: 100vh) {
