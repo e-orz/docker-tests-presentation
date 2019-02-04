@@ -2,7 +2,15 @@
 
 ---
 
-### Agenda
+## The TestContainers Library
+
+* pure Java library - docker CLI is not needed
+* self contained - all depenencies are sharded (won't confilict with apache when trying to use the Unix socket)
+*  simple (almost declerative) API
+
+---
+
+### Simple Start
 
 * Starting and stopping a Docker container before and after a test Suite.
 * Accessing the container from the test
@@ -19,21 +27,9 @@
 * Special case study: Kafka ("compose" in code, private network, exposed port discovery)
 * Jenkins support (mapping the docker socket)
 
----
-
-## The TestContainers Library
-
-
-*lkj
-lkjflkdsj
-* kfjdslj
-* pure Java library - docker Cli is not needed
-* self contained - all depenencies are sharded (won't confilict with apache when trying to use the Unix socket
-)
-*  simple (almost declerative) API
-* 8
-
 +++
+#### Starting ES container
+
 ```scala
 class TestESSuiteDemo extends FlatSpec with ForAllTestContainer {
   val elasticsearchVersion: String = "6.5.4"
