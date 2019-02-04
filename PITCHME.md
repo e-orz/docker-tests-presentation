@@ -35,7 +35,7 @@ lkjflkdsj
 
 +++
 @snap[text-15 text-gold]
-Code presenting repository source file template.
+Code presenting rrrrrepository source file template.
 @snapend
 ```scala
 class TestESSuiteDemo extends FlatSpec with ForAllTestContainer {
