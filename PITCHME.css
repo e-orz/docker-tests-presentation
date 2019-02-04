@@ -10,15 +10,5 @@
   font-size: 1.0em;
   width: 98%;
   margin: 0px;
-  line-height: 1.2;
-  border-radius: 10px;
-  max-height: 30vh !important;
-  overflow: auto !important;
-}
-
-@media (device-width: 100vw) and (device-height: 100vh) {
-  .reveal pre code {
-    max-height: 50vh !important;
-  }
 }
 
