@@ -8,7 +8,7 @@
 
 .reveal pre code {
   font-size: 1.0em;
-  width: 120%;
+  width: 98%;
   margin: 0px;
   line-height: 1.2;
   border-radius: 10px;
