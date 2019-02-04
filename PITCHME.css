@@ -1,6 +1,6 @@
 /** Code-Presenting Template Styles ***/
 
-.reveal pre {
+.reveal pre code {
   width: 98%;
   margin: 0px;
   box-shadow: none;
