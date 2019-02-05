@@ -230,3 +230,20 @@ def kafkaAndZookeeper(kafkaVersion: String, zookeeperVersion: String): KafkaZook
   KafkaZookeeperContainers(kafkaContainer, zookeeperContainer, combined)
 }
 ```
+
++++
+
+#### The Actual Suite
+
+```scala
+class TestKZSuite extends FlatSpec with KafkaZookeeperDockerSuite {
+  override def zookeeperVersion: String = "3.4.13"
+  override def kafkaVersion: String = "2.12-2.1.0"
+
+  "KafkaZookeeperDockerSuite" should "work" in {
+    //dummy line for breakpoint
+    val a = 10
+    assert(true)
+  }
+}
+```
