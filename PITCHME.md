@@ -287,8 +287,8 @@ trait KafkaZookeeperDockerSuite extends ForAllTestContainer { this: Suite =>
   }
 }
 ```
-@[12](Advertising the EXTERNAL network configuration)
-@[13-18](Making sure the configuration succeeded)
+@[11-13](Advertising the EXTERNAL network configuration)
+@[14-18](Making sure the configuration succeeded)
 
 
 +++
