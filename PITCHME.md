@@ -247,3 +247,16 @@ class TestKZSuite extends FlatSpec with KafkaZookeeperDockerSuite {
   }
 }
 ```
+
+---
+
+### Final Notes
+
+* The library also supports:
+	- Dockerfile
+	- compose (even without compose installed)
+* The container can reach the host (Linux and mac!)
+	- Expose the host port `kjhkjh`
+	- Reach from the container using `lkjlkj`
+* Works perfectly in Jenkins (thanks Amos) but the docker socket should be available
+	
