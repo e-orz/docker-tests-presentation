@@ -319,3 +319,6 @@ class TestKZSuite extends FlatSpec with KafkaZookeeperDockerSuite {
 	- Reach from the container using `lkjlkj`
 * Works perfectly in Jenkins (thanks Amos) but the docker socket should be available
 	
+---
+
+# Questions?
