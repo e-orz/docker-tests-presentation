@@ -177,3 +177,55 @@ object MultipleContainersParallelExecution {
 ### Solution?
 
 ![Kafka Multi Broker](assets/kafka-multi-broker.png)
+
++++
+
+### The Solution
+
+```scala
+def kafkaAndZookeeper(kafkaVersion: String, zookeeperVersion: String): KafkaZookeeperContainers = {
+  val internalNetwork = Network.newNetwork()
+  lazy val zookeeperContainer = {
+    val scalaContainer = GenericContainer(s"zookeeper:$zookeeperVersion",
+      exposedPorts = Seq(2181),
+      waitStrategy = Wait.forLogMessage(".*binding to port 0.0.0.0/0.0.0.0:2181.*\n", 1)
+    )
+    scalaContainer.configure { container =>
+      container.withNetwork(internalNetwork)
+      container.withNetworkAliases("zookeeper")
+      val logger = new Slf4jLogConsumer(LoggerFactory.getLogger(container.getDockerImageName))
+      container.withLogConsumer(logger)
+    }
+    scalaContainer
+  }
+  lazy val kafkaContainer = {
+    val externalPort = 9092
+    val internalPort = 10000 + externalPort
+    val brokerId = 1
+    val scalaContainer = GenericContainer(s"wurstmeister/kafka:$kafkaVersion",
+      exposedPorts = Seq(externalPort),
+      env = Map(
+        "KAFKA_ZOOKEEPER_CONNECT" -> s"zookeeper:2181",
+        "KAFKA_LISTENERS" -> s"INTERNAL://0.0.0.0:$internalPort,EXTERNAL://0.0.0.0:$externalPort",
+        "KAFKA_LISTENER_SECURITY_PROTOCOL_MAP" -> s"INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT",
+        "KAFKA_INTER_BROKER_LISTENER_NAME" -> s"INTERNAL",
+        "KAFKA_CREATE_TOPICS" -> s"persist_topic:1:1,persist_topic.priority:1:1,index_topic:1:1,index_topic.priority:1:1",
+        "KAFKA_BROKER_ID" -> s"$brokerId"
+      ),
+      waitStrategy = Wait.forLogMessage(".*KafkaServer.*started.*\n", 1)
+    )
+    scalaContainer.configure { container =>
+      container.withNetwork(internalNetwork)
+      val networkAlias = s"kafkaBroker-$brokerId"
+      container.withNetworkAliases(networkAlias)
+      //The network alias can be used the advertising listeners later (for multi brokers configuration)
+      container.addEnv("KAFKA_ADVERTISED_LISTENERS", s"INTERNAL://$networkAlias:$internalPort")
+      val logger = new Slf4jLogConsumer(LoggerFactory.getLogger(container.getDockerImageName))
+      container.withLogConsumer(logger)
+    }
+    scalaContainer
+  }
+  val combined = MultipleContainers(zookeeperContainer, kafkaContainer)
+  KafkaZookeeperContainers(kafkaContainer, zookeeperContainer, combined)
+}
+```
