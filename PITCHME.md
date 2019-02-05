@@ -199,7 +199,8 @@ object MultipleContainersParallelExecution {
 
 +++
 
-#### Kafka and Zookeeper Containers
+##### The Solution
+##### Kafka and Zookeeper Containers
 
 ```scala
 def kafkaAndZookeeper(kafkaVersion: String, zookeeperVersion: String): KafkaZookeeperContainers = {
