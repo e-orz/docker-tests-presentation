@@ -249,6 +249,10 @@ def kafkaAndZookeeper(kafkaVersion: String, zookeeperVersion: String): KafkaZook
 }
 ```
 @[3](Declare a new Docker network (won't be created until the actual run))
+@[10](Add this container the the network)
+@[11](Give this container a DNS name inside the network)
+@[18](The INTERNAL port of Kafka to be accessed by EXTERNAL clients)
+@[19](The INTERNAL port of Kafka to be accessed by Kafka brokers/INTERNAL clients)
 
 +++
 
