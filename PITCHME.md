@@ -1,4 +1,4 @@
-# Dockerized 3rd Party Components in ScalaTest
+### Dockerized 3rd Party Components in ScalaTest
 
 ---
 
