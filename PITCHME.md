@@ -68,6 +68,7 @@ class TestESSuiteDemo extends FlatSpec with ForAllTestContainer {
 @[8](environments variable inject to the container)
 @[10-13](getting access to the internal Java container)
 @[18](getting the container ip address (mac ready!))
+@[19](getting the mapped port accessible from the host machine)
 
 +++
 
