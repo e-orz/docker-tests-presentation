@@ -248,15 +248,51 @@ def kafkaAndZookeeper(kafkaVersion: String, zookeeperVersion: String): KafkaZook
   KafkaZookeeperContainers(kafkaContainer, zookeeperContainer, combined)
 }
 ```
-@[3](Declare a new Docker network (won't be created until the actual run))
-@[10](Add this container the the network)
-@[11](Give this container a DNS name inside the network)
-@[18](The INTERNAL port of Kafka to be accessed by EXTERNAL clients)
-@[19](The INTERNAL port of Kafka to be accessed by Kafka brokers/INTERNAL clients)
+@[2](Declare a new Docker network (won't be created until the actual run))
+@[9](Add this container the the network)
+@[10](Give this container a DNS name inside the network)
+@[17](The INTERNAL port of Kafka to be used by EXTERNAL clients)
+@[18](The INTERNAL port to be used by Kafka brokers/INTERNAL clients)
+@[23](Zookeeper hostname is known in advance)
+@[24](Configure Kafka to listen to TWO ports)
+@[26](Inter broker communication will be done using the internal port)
+@[28](Set the Kafka broker ID manually)
+@[37](Advertise only the INTERNAL network configuration (for now))
 
 +++
 
 #### The Actual Suite
+
+```scala
+trait KafkaZookeeperDockerSuite extends ForAllTestContainer { this: Suite =>
+  def zookeeperVersion: String
+  def kafkaVersion: String
+  val KafkaZookeeperContainers(kafkaContainer, zookeeperContainer, combined) = ContainerHelpers.kafkaAndZookeeper(kafkaVersion, zookeeperVersion)
+  override val container = combined
+
+  override def afterStart(): Unit = {
+    super.afterStart()
+    // scalastyle:off
+    kafkaContainer.configure{ container =>
+      val result = container.execInContainer("bash", "-c", "${KAFKA_HOME}/bin/kafka-configs.sh " +
+        "--bootstrap-server localhost:19092 --entity-type brokers --entity-name 1 --alter --add-config " +
+        s"advertised.listeners=[EXTERNAL://${kafkaContainer.containerIpAddress}:${kafkaContainer.mappedPort(9092)},INTERNAL://kafkaBroker-1:19092]")
+      val stdOut = result.getStdout.trim
+      if (stdOut != "Completed updating config for broker: 1.") {
+        val stdErr = result.getStderr.trim
+        throw new Exception(s"Couldn't change Kafka's advertised listeners config for broker 1. stdout: [$stdOut]. stderr: [$stdErr]")
+      }
+    }
+    // scalastyle:on
+  }
+}
+```
+@[12](Advertising the EXTERNAL network configuration)
+@[13-18](Making sure the configuration succeeded)
+
+
++++
+#### Using the Suite
 
 ```scala
 class TestKZSuite extends FlatSpec with KafkaZookeeperDockerSuite {
