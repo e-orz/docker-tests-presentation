@@ -112,7 +112,7 @@ class TestESSuiteDemo extends FlatSpec with ForAllTestContainer {
   }
 ```
 
-@[15](Another wait strategy)
+@[16](Another wait strategy)
 
 +++
 
@@ -249,6 +249,7 @@ def kafkaAndZookeeper(kafkaVersion: String, zookeeperVersion: String): KafkaZook
   KafkaZookeeperContainers(kafkaContainer, zookeeperContainer, combined)
 }
 ```
+@[3](Declare a new Docker network (won't be created until the actual run))
 
 +++
 
