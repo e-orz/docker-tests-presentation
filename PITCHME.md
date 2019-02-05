@@ -163,7 +163,8 @@ object MultipleContainersParallelExecution {
 
 ---
 
-## Special Case Study: Kafka
+## Special Case Study
+#### Kafka
 
 +++
 
@@ -172,6 +173,7 @@ object MultipleContainersParallelExecution {
 ![Kafka Communication](assets/kafka-communication.png)
 
 +++
-### Networking in the Docker environment
+
+### Solution?
 
 ![Kafka Multi Broker](assets/kafka-multi-broker.png)
