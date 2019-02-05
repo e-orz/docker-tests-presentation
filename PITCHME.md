@@ -51,7 +51,9 @@ class TestESSuiteDemo extends FlatSpec with ForAllTestContainer {
   }
 
   "TestEsSuiteDemo" should "work" in {
-    val output = scala.io.Source.fromURL(s"http://${container.containerIpAddress}:${container.mappedPort(9200)}").mkString
+    val addr = container.containerIpAddress
+    val port = container.mappedPort(9200)
+    val output = scala.io.Source.fromURL(s"http://$addr:$port").mkString
     print(s"The output:\n$output\n")
     assert(true)
   }
@@ -64,7 +66,7 @@ class TestESSuiteDemo extends FlatSpec with ForAllTestContainer {
 @[6](exposing ports)
 @[7](Wait until the wait condition met)
 @[8](environments variable inject to the container)
-@[10-14](getting access to the internal Java container)
+@[10-13](getting access to the internal Java container)
 
 +++
 
