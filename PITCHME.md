@@ -108,7 +108,7 @@ trait EsCasDockerSuite extends ForAllTestContainer { this:Suite =>
   override val container = MultipleContainers(cassandraContainer, elasticsearchContainer)
 }
 ```
-@[6](Note: the container won't start in parallel)
+@[6](Note: the containers won't start in parallel)
 
 +++
 
@@ -160,3 +160,9 @@ object MultipleContainersParallelExecution {
   def apply(containers: LazyContainer[_]*): MultipleContainersParallelExecution = new MultipleContainersParallelExecution(containers)
 }
 ```
+
+---
+
+## Special Case Study: Kafka
+### The Challenge
+![Kafka Communication](assets/kafka-communication.png)
