@@ -2,11 +2,23 @@
 
 ---
 
+## Why?
+
+* Mocks are faster but are not the _real_ thing
+* Running embedded can cause issues
+	- jar hell
+	- not supported by the developers
+	- adapt the code for the tests
+* Docker community is large
+	- Most of the apps have ready made images
+
+---
+
 ## The TestContainers Library
 
 * pure Java library - docker CLI is not needed
-* self contained - all depenencies are sharded (won't confilict with apache when trying to use the Unix socket)
-*  simple (almost declerative) API
+* self contained - all dependencies are shaded (won't conflict with Apache when trying to use the Unix socket)
+*  simple (almost declarative) API
 
 ---
 
@@ -47,7 +59,7 @@ class TestESSuiteDemo extends FlatSpec with ForAllTestContainer {
 }
 ```
 @[1](Start the container before the suite and close it after)
-@[4](the container)
+@[4](override the container)
 @[5](container declaration)
 @[6](the container)
 @[5-16](getting access to the internal Java container)
