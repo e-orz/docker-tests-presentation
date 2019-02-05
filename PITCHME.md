@@ -199,7 +199,7 @@ object MultipleContainersParallelExecution {
 
 +++
 
-### The Solution
+#### The Solution
 #### Kafka and Zookeeper Containers
 
 ```scala
