@@ -61,8 +61,10 @@ class TestESSuiteDemo extends FlatSpec with ForAllTestContainer {
 @[1](Start the container before the suite and close it after)
 @[4](override the container)
 @[5](container declaration)
-@[6](the container)
-@[5-16](getting access to the internal Java container)
+@[6](exposing ports)
+@[7](Wait until the wait condition met)
+@[8](environments variable inject to the container)
+@[10-14](getting access to the internal Java container)
 
 +++
 
